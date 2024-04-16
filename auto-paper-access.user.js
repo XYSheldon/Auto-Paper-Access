@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Auto Paper Access
 // @updateURL    https://openuserjs.org/meta/lushl9301/Auto_Paper_Access.meta.js
-// @copyright    2017, lushl9301 (https://github.com/lushl9301)
-// @version      8.1
+// @copyright    2024, XYSheldon (https://github.com/XYSheldon)
+// @version      8.2
 // @description  A simple script runs on Tampermonkey. You can easily access IEEE Xplore, ACM Digital Library, etc without clicking proxy bookmarklet provided by universities.
-// @author       lushl9301, koallen
+// @author       lushl9301, koallen, XYSheldon
 // @license      MIT
 // @run-at       document-body
 // @match        www.sciencedirect.com/*
@@ -16,7 +16,7 @@
 // @match        epubs.siam.org/*
 // @match        www.nature.com/*
 // @match        pubsonline.informs.org/*
-// @match        *.ezlibproxy1.ntu.edu.sg/*
+// @match        *.remotexs.ntu.edu.sg/*
 // @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -81,8 +81,9 @@
     if (currUniversity === defaultUniversity) {
         GM_config.open();
     } else if ("Nanyang Technological University" === currUniversity) {
-        if (!location.href.includes("ezlibproxy1.ntu.edu.sg")) {
-            location.href = "https://ezlibproxy1.ntu.edu.sg/login?url=" + location.href;
+        if (!location.href.includes("remotexs.ntu.edu.sg")) {
+            //Provided by NTU Library: javascript:void(location.href=%22https://remotexs.ntu.edu.sg/user/login?dest=%22+location.href)
+            location.href = "https://remotexs.ntu.edu.sg/user/login?dest=" + location.href;
         }
     } else if ('National University of Singapore' == currUniversity) {
         location.href = "http://libproxy1.nus.edu.sg/login?url=" + location.href;
