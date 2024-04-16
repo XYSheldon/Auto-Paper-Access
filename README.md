@@ -2,6 +2,9 @@
 
 A simple script runs on Tampermonkey. You can easily access IEEE Xplore, ACM Digital Library, etc without clicking proxy bookmarklet provided by your university.
 
+# Update by XYSheldon
+Update the access of NTU.
+
 ## Usage
 
 1. Install [Tampermonkey](https://tampermonkey.net/) plugin for your web browsers.
