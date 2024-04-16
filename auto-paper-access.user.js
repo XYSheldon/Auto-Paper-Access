@@ -11,18 +11,18 @@
 // @match        digital-library.theiet.org/*
 // @match        dl.acm.org/*
 // @match        *.springer.com/*
-// @match        onlinelibrary.wiley.com/doi/*
+// @match        onlinelibrary.wiley.com/*
 // @match        www.ncbi.nlm.nih.gov/pubmed/*
 // @match        epubs.siam.org/*
 // @match        www.nature.com/*
 // @match        pubsonline.informs.org/*
 // @match        *.remotexs.ntu.edu.sg/*
 // @match        *.libproxy1.nus.edu.sg/*
-// @require            https://openuserjs.org/src/libs/sizzle/GM_config.js
-// @grant              GM_getValue
-// @grant              GM_setValue
-// @grant              GM.getValue
-// @grant              GM.setValue
+// @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM.getValue
+// @grant        GM.setValue
 // ==/UserScript==
 
 /* jshint esversion: 8 */
