@@ -1,9 +1,6 @@
-# Auto-Paper-Access
+# Auto-Paper-Access (NTU/NUS)
 
 A simple script runs on Tampermonkey. You can easily access IEEE Xplore, ACM Digital Library, etc without clicking proxy bookmarklet provided by your university.
-
-# Update by XYSheldon
-Update the access of NTU.
 
 ## Usage
 
@@ -30,3 +27,4 @@ Update the access of NTU.
 
 * [lushl9301](https://github.com/lushl9301), National University of Singapore
 * [koallen](https://github.com/koallen), Nanyang Technological University, Singapore
+* [XYSheldon](https://github.com/XYSheldon), Nanyang Technological University, Singapore
