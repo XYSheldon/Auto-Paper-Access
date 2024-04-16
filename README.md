@@ -9,7 +9,7 @@ Update the access of NTU.
 
 1. Install [Tampermonkey](https://tampermonkey.net/) plugin for your web browsers.
 
-2. Install this script from https://openuserjs.org/scripts/lushl9301/Auto_Paper_Access by simply click *install*
+2. Install this script from [Github Raw](https://github.com/XYSheldon/Auto-Paper-Access/raw/master/auto-paper-access.user.js) by simply click *install*
 
 3. Done! And you can try the following papers from ACM DL and IEEE Xplore:
 
