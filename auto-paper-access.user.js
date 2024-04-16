@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Auto Paper Access (NTU/NUS)
 // @copyright    2024, XYSheldon (https://github.com/XYSheldon)
-// @version      8.2
+// @version      8.3
 // @description  A simple script runs on Tampermonkey. You can easily access IEEE Xplore, ACM Digital Library, etc without clicking proxy bookmarklet provided by universities.
 // @author       lushl9301, koallen, XYSheldon
 // @license      MIT
