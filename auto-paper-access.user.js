@@ -1,6 +1,5 @@
 // ==UserScript==
-// @name         Auto Paper Access
-// @updateURL    https://openuserjs.org/meta/lushl9301/Auto_Paper_Access.meta.js
+// @name         Auto Paper Access (NTU/NUS)
 // @copyright    2024, XYSheldon (https://github.com/XYSheldon)
 // @version      8.2
 // @description  A simple script runs on Tampermonkey. You can easily access IEEE Xplore, ACM Digital Library, etc without clicking proxy bookmarklet provided by universities.
@@ -17,10 +16,16 @@
 // @match        www.nature.com/*
 // @match        pubsonline.informs.org/*
 // @match        *.remotexs.ntu.edu.sg/*
-// @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
-// @grant        GM_getValue
-// @grant        GM_setValue
+// @match        *.libproxy1.nus.edu.sg/*
+// @require            https://openuserjs.org/src/libs/sizzle/GM_config.js
+// @grant              GM_getValue
+// @grant              GM_setValue
+// @grant              GM.getValue
+// @grant              GM.setValue
 // ==/UserScript==
+
+/* jshint esversion: 8 */
+/* globals GM_config, GM_configStruct */
 
 (function() {
     'use strict';
@@ -34,6 +39,12 @@
             'title': 'Choose your university',
             'fields':
             {
+                'active':
+                {
+                    'label': 'Enable',
+                    'type': 'checkbox',
+                    'default': true
+                },
                 'university': // field id
                 {
                     'label': 'University',
@@ -46,6 +57,21 @@
             {
                 'init': function() {
                     currUniversity = GM_config.get('university');
+                    //alert(currUniversity);
+                    if (GM_config.get('active')) {
+                        if (currUniversity === defaultUniversity) {
+                            GM_config.open();
+                        } else if ("Nanyang Technological University" === currUniversity) {
+                            if (!location.href.includes("remotexs.ntu.edu.sg")) {
+                                //Provided by NTU Library: javascript:void(location.href=%22https://remotexs.ntu.edu.sg/user/login?dest=%22+location.href)
+                                location.href = "https://remotexs.ntu.edu.sg/user/login?dest=" + location.href;
+                            }
+                        } else if ('National University of Singapore' == currUniversity) {
+                            if (!location.href.includes("libproxy1.nus.edu.sg")) {
+                                location.href = "http://libproxy1.nus.edu.sg/login?url=" + location.href;
+                            }
+                        }
+                    }
                 },
                 'open': function() {
                     // custom layout
@@ -62,6 +88,7 @@
                     }, false);
                 },
                 'save': function() {
+                    alert(currUniversity);
                     if (prevUniversity !== currUniversity)
                         location.reload();
                 }
@@ -71,21 +98,14 @@
 
     // display a button to toggle config panel
     var button = document.createElement('button');
-    button.innerHTML = "Auto Paper Access";
-    button.style = "top:1em;right:1em;position:fixed;z-index: 9999";
+    button.innerHTML = "Auto Paper Access (NTU/NUS)";
+    button.style = "top:7em;right:1em;position:fixed;z-index: 9999";
     button.setAttribute('type', 'button');
     button.addEventListener('click', function(){GM_config.open();}, false);
     document.body.appendChild(button);
 
+    currUniversity = GM_config.get('university');
+    // alert(currUniversity);
     // display config or access with uni account
-    if (currUniversity === defaultUniversity) {
-        GM_config.open();
-    } else if ("Nanyang Technological University" === currUniversity) {
-        if (!location.href.includes("remotexs.ntu.edu.sg")) {
-            //Provided by NTU Library: javascript:void(location.href=%22https://remotexs.ntu.edu.sg/user/login?dest=%22+location.href)
-            location.href = "https://remotexs.ntu.edu.sg/user/login?dest=" + location.href;
-        }
-    } else if ('National University of Singapore' == currUniversity) {
-        location.href = "http://libproxy1.nus.edu.sg/login?url=" + location.href;
-    }
+
 })();
