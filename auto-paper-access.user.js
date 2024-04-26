@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Auto Paper Access (NTU/NUS)
 // @copyright    2024, XYSheldon (https://github.com/XYSheldon)
-// @version      8.6
-// @description  A simple script runs on Tampermonkey. You can easily access IEEE Xplore, ACM Digital Library, etc without clicking proxy bookmarklet provided by universities.
+// @version      8.7
+// @description  A simple script runs on Tampermonkey. You can easily access IEEE Xplore, ACM Digital Library, etc without clicking proxy bookmarklet provided by universities. Updated by XYSheldon.
 // @author       lushl9301, koallen, XYSheldon
 // @license      MIT
 // @run-at       document-body
+// @noframes
 // @match        *://www.sciencedirect.com/*
 // @match        *://ieeexplore.ieee.org/*
 // @match        *://digital-library.theiet.org/*
@@ -32,38 +33,40 @@
     'use strict';
 
     // initialization
-    var currUniversity, prevUniversity;
+    var currUniversity, prevUniversity, viaProxy;
     var defaultUniversity = '====N.A.====';
     GM_config.init(
         {
             'id': 'universityConfig',
-            'title': 'Choose your university',
+            'title': 'Auto Paper Access (NTU/NUS)',
             'fields':
             {
                 'active':
                 {
                     'label': 'Enable',
                     'type': 'checkbox',
-                    'default': true
+                    'default': false
                 },
-                'ieeeXploreDirectPDF':
+                'pdfjump_ieee':
                 {
                     'label': 'IEEE Xplore PDF Auto Jump',
                     'type': 'checkbox',
-                    'default': true
+                    'default': false
                 },
-                'university': // field id
+                'university':
                 {
                     'label': 'University',
                     'type': 'select',
                     'options': [defaultUniversity, 'Nanyang Technological University', 'National University of Singapore'],
                     'default': defaultUniversity
                 }
+
             },
             'events':
             {
                 'init': function() {
                     currUniversity = GM_config.get('university');
+                    viaProxy = false;
                     //alert(currUniversity);
                     if (GM_config.get('active')) {
                         if (currUniversity === defaultUniversity) {
@@ -72,11 +75,31 @@
                             if (!location.href.includes("remotexs.ntu.edu.sg")) {
                                 //Provided by NTU Library: javascript:void(location.href=%22https://remotexs.ntu.edu.sg/user/login?dest=%22+location.href)
                                 location.href = "https://remotexs.ntu.edu.sg/user/login?dest=" + location.href;
+                            } else {
+                                viaProxy = true;
                             }
                         } else if ('National University of Singapore' == currUniversity) {
+                                //Provided by NUS Library: javascript:void(location.href='https://libproxy1.nus.edu.sg/login?url='+location.href)
                             if (!location.href.includes("libproxy1.nus.edu.sg")) {
-                                location.href = "http://libproxy1.nus.edu.sg/login?url=" + location.href;
+                                location.href = "https://libproxy1.nus.edu.sg/login?url=" + location.href;
+                            } else {
+                                viaProxy = true;
                             }
+                        }
+                        if (viaProxy&&(location.href.includes("ieeexplore"))&&(location.href.includes("document"))) {
+                            // IEEE Xpolore Auto Jump
+                            var articleId = location.href.match("[0-9]{5,}");
+                            if (articleId != null)
+                            {
+                                var pdfurl = "https://" + location.hostname + "/stamp/stamp.jsp?tp=&arnumber=" + articleId;
+                                //alert(pdfurl);
+                                if (GM_config.get('pdfjump_ieee')) {
+                                    location.href = pdfurl;
+                                }
+                            }
+
+                            //A method based on querySelector, slower.
+                            //var pdfbutton = document.querySelector("a.pdf-btn-link");
                         }
                     }
                 },
@@ -95,9 +118,10 @@
                     }, false);
                 },
                 'save': function() {
-                    alert(currUniversity);
-                    if (prevUniversity !== currUniversity)
+                    alert("Saved!\n"+currUniversity);
+                    if (prevUniversity !== currUniversity) {
                         location.reload();
+                    }
                 }
             },
             'css': '#universityConfig .config_header { font-size: 20px; margin: 0 0 10 0; }'
@@ -111,7 +135,7 @@
     button.addEventListener('click', function(){GM_config.open();}, false);
     document.body.appendChild(button);
 
-    currUniversity = GM_config.get('university');
+    // currUniversity = GM_config.get('university');
     // alert(currUniversity);
     // display config or access with uni account
 
