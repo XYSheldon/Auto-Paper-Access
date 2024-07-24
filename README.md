@@ -1,5 +1,7 @@
 # Auto-Paper-Access (NTU/NUS)
 
+![Demo][demoImg]
+
 A simple but useful script runs on most modern broswers on any platform via Tampermonkey/Userscripts . You can easily access IEEE Xplore, ACM Digital Library, etc without clicking proxy bookmarklet provided by your university.
 
 This script was maintained by [lushl9301](https://github.com/lushl9301) and [koallen](https://github.com/koallen) many years ago, and was brought to my attention as a result of the removal of browser plugin support from the NTU Library in 2024 [^1]. I've made a few updates to make the script usable again and added a PDF fast access feature.
@@ -37,3 +39,6 @@ An option for IEEE Xplore PDF direct jump is available. When access to IEEE Xplo
 ### Previously maintained by
 * [lushl9301](https://github.com/lushl9301), National University of Singapore
 * [koallen](https://github.com/koallen), Nanyang Technological University, Singapore
+
+
+[demoImg]:/Demo.png
