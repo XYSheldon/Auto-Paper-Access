@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Auto Paper Access (NTU/NUS)
-// @copyright    2024, XYSheldon (https://github.com/XYSheldon)
+// @copyright    2026, XYSheldon (https://github.com/XYSheldon)
 // @version      9.0
 // @description  A simple script runs on Tampermonkey. You can easily access IEEE Xplore, ACM Digital Library, etc without clicking proxy bookmarklet provided by universities. Updated by XYSheldon.
 // @author       lushl9301, koallen, XYSheldon
@@ -154,20 +154,52 @@
         return d;
     }
 
-    function makeCheckbox(id, labelText, checked) {
-        var label = document.createElement('label');
-        label.htmlFor = id;
-        label.style.cssText = 'all:initial;display:flex;align-items:center;gap:8px;color:#222222;font-family:Arial,sans-serif;font-size:14px;cursor:pointer;';
-        var input = document.createElement('input');
-        input.type = 'checkbox';
-        input.id = id;
-        input.checked = checked;
-        input.style.cssText = 'all:initial;display:inline-block;width:16px;height:16px;cursor:pointer;';
-        label.appendChild(input);
-        label.appendChild(document.createTextNode(labelText));
-        return { label: label, input: input };
-    }
+function makeCheckbox(id, labelText, checked) {
+    var label = document.createElement('label');
+    label.htmlFor = id;
+    label.style.cssText = [
+        'all:initial',
+        'display:flex',
+        'align-items:center',
+        'gap:8px',
+        'color:#222222',
+        'font-family:Arial,sans-serif',
+        'font-size:14px',
+        'line-height:1.4',
+        'cursor:pointer',
+        'box-sizing:border-box'
+    ].join(';');
 
+    var input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = id;
+    input.checked = checked;
+
+    // 不使用 all:initial，避免抹掉原生 checkbox 外观
+    input.style.cssText = [
+        'display:inline-block',
+        'width:16px',
+        'height:16px',
+        'margin:0',
+        'padding:0',
+        'vertical-align:middle',
+        'cursor:pointer',
+        'box-sizing:border-box',
+        'appearance:auto',
+        '-webkit-appearance:checkbox',
+        '-moz-appearance:checkbox',
+        'accent-color:#1a73e8',
+        'opacity:1',
+        'visibility:visible',
+        'background:Canvas',
+        'border:initial'
+    ].join(';');
+
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(labelText));
+    return { label: label, input: input };
+}
+    
     function makeActionButton(text, bg, fg) {
         var btn = document.createElement('button');
         btn.textContent = text;
